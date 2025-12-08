@@ -226,12 +226,32 @@ def compute_quiz_summary(session_id: str) -> dict[str, Any]:
 
     duration = timing.duration_seconds(session.start_time, session.end_time)
 
+    incorrect_questions: list[dict[str, Any]] = []
+    for attempt in session.attempts:
+        if not attempt.is_correct:
+            question = attempt.question
+            question_payload = {
+                "id": question.id,
+                "topic": question.topic,
+                "difficulty": question.difficulty,
+                "text": question.text,
+                "options": list(question.options),
+                "correct_option": question.correct_option,
+            }
+            incorrect_questions.append(
+                {
+                    "question": question_payload,
+                    "chosen_option": attempt.chosen_option,
+                    "correct_option": question.correct_option,
+                }
+            )
+
     return {
         "total_questions": session.total_questions,
         "correct_count": session.correct_count,
         "incorrect_count": session.incorrect_count,
         "score_percentage": session.score_percentage,
         "duration_seconds": duration,
-        "incorrect_questions": [],
+        "incorrect_questions": incorrect_questions,
     }
 

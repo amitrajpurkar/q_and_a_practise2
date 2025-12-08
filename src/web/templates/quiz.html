@@ -129,6 +129,32 @@
           {{ summary.duration_seconds|round(1) }} s
         </li>
       </ul>
+
+      {% if summary.incorrect_questions %}
+        <div class="mt-4 space-y-2">
+          <p class="font-semibold">Review incorrect answers</p>
+          <ul class="space-y-2">
+            {% for item in summary.incorrect_questions %}
+              <li class="border border-gray-200 rounded p-2">
+                <p class="text-sm font-semibold">Question:</p>
+                <p class="text-sm mb-1">{{ item.question.text }}</p>
+                <p class="text-sm">
+                  <span class="font-semibold">Your answer:</span>
+                  {{ item.chosen_option }}
+                </p>
+                <p class="text-sm">
+                  <span class="font-semibold">Correct answer:</span>
+                  {{ item.correct_option }}
+                </p>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <p class="mt-3 text-sm font-semibold text-green-700">
+          All answers were correct – great job!
+        </p>
+      {% endif %}
     </div>
   {% elif last_result and last_result.finished %}
     <p class="font-semibold">Quiz finished.</p>

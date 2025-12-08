@@ -92,9 +92,9 @@ description: "Task list for Offline Quiz Question Bank feature"
 
 ### Implementation for User Story 3
 
-- [ ] T022 [US3] Extend summary computation in `src/services/quiz_service.py` to collect incorrect QuestionAttempt details (question, chosen_option, correct_option)
-- [ ] T023 [US3] Extend `GET /api/quiz/{session_id}/summary` in `src/api/routes.py` to include incorrect question details in the QuizSummary JSON
-- [ ] T024 [P] [US3] Update `src/web/templates/quiz.html` summary view to render a review section listing incorrect questions with the student’s and correct answers
+- [X] T022 [US3] Extend summary computation in `src/services/quiz_service.py` to collect incorrect QuestionAttempt details (question, chosen_option, correct_option)
+- [X] T023 [US3] Extend `GET /api/quiz/{session_id}/summary` in `src/api/routes.py` to include incorrect question details in the QuizSummary JSON
+- [X] T024 [P] [US3] Update `src/web/templates/quiz.html` summary view to render a review section listing incorrect questions with the student’s and correct answers
 
 **Checkpoint**: User Story 3 should be functional: summary shows a detailed review of incorrect answers when applicable and handles the “all correct” case gracefully.
 
