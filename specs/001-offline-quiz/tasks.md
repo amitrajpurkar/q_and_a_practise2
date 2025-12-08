@@ -25,9 +25,9 @@ description: "Task list for Offline Quiz Question Bank feature"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan (dirs: src/, src/models/, src/services/, src/api/, src/utils/, src/web/templates/, src/web/static/css/, src/web/static/js/, src/data/, tests/unit/)
-- [ ] T002 Initialize uv environment for Python 3.12 and create local virtual env in project root (uv venv)
-- [ ] T003 [P] Install core dependencies with uv (FastAPI, uvicorn, pandas, Jinja2, pydantic) for use by modules under `src/`
+- [X] T001 Create project structure per implementation plan (dirs: src/, src/models/, src/services/, src/api/, src/utils/, src/web/templates/, src/web/static/css/, src/web/static/js/, src/data/, tests/unit/)
+- [X] T002 Initialize uv environment for Python 3.12 and create local virtual env in project root (uv venv)
+- [X] T003 [P] Install core dependencies with uv (FastAPI, uvicorn, pandas, Jinja2, pydantic) for use by modules under `src/`
 
 ---
 
@@ -35,12 +35,12 @@ description: "Task list for Offline Quiz Question Bank feature"
 
 **Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
 
-- [ ] T004 Create domain model skeletons in `src/models/question.py` (BaseQuestion/MCQQuestion, QuizSession, QuestionAttempt classes with fields from data-model.md)
-- [ ] T005 [P] Implement CSV loading function in `src/services/quiz_service.py` using pandas to read `src/data/question-bank.csv` into a list of Question objects with basic validation
-- [ ] T006 [P] Implement timing helpers in `src/utils/timing.py` for starting/stopping timers and computing duration in seconds
-- [ ] T007 [P] Create FastAPI application entrypoint in `src/main.py` (app instance, template configuration, static files mount for `src/web/static`)
-- [ ] T008 [P] Create `src/api/routes.py` with APIRouter, route stubs for `/`, `/api/quiz/start`, `/api/quiz/{session_id}/answer`, `/api/quiz/{session_id}/summary`, and include router from `src/main.py`
-- [ ] T009 [P] Create base templates and static assets: `src/web/templates/base.html`, `src/web/templates/quiz.html`, `src/web/static/js/htmx.min.js`, `src/web/static/css/tailwind.css` with minimal layout and placeholders
+- [X] T004 Create domain model skeletons in `src/models/question.py` (BaseQuestion/MCQQuestion, QuizSession, QuestionAttempt classes with fields from data-model.md)
+- [X] T005 [P] Implement CSV loading function in `src/services/quiz_service.py` using pandas to read `src/data/question-bank.csv` into a list of Question objects with basic validation
+- [X] T006 [P] Implement timing helpers in `src/utils/timing.py` for starting/stopping timers and computing duration in seconds
+- [X] T007 [P] Create FastAPI application entrypoint in `src/main.py` (app instance, template configuration, static files mount for `src/web/static`)
+- [X] T008 [P] Create `src/api/routes.py` with APIRouter, route stubs for `/`, `/api/quiz/start`, `/api/quiz/{session_id}/answer`, `/api/quiz/{session_id}/summary`, and include router from `src/main.py`
+- [X] T009 [P] Create base templates and static assets: `src/web/templates/base.html`, `src/web/templates/quiz.html`, `src/web/static/js/htmx.min.js`, `src/web/static/css/tailwind.css` with minimal layout and placeholders
 
 **Checkpoint**: Application skeleton runs with uvicorn and serves a basic home page without full quiz behavior.
 
