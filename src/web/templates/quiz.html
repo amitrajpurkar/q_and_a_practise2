@@ -20,8 +20,9 @@
       class="border rounded px-2 py-1 min-w-[8rem]"
       required
     >
+      <option value="" disabled {% if not selected_topic %}selected{% endif %}></option>
       {% for t in topics %}
-        <option value="{{ t }}">{{ t }}</option>
+        <option value="{{ t }}" {% if selected_topic == t %}selected{% endif %}>{{ t }}</option>
       {% endfor %}
     </select>
   </div>
@@ -34,8 +35,9 @@
       class="border rounded px-2 py-1 min-w-[8rem]"
       required
     >
+      <option value="" disabled {% if not selected_difficulty %}selected{% endif %}></option>
       {% for d in difficulties %}
-        <option value="{{ d }}">{{ d|capitalize }}</option>
+        <option value="{{ d }}" {% if selected_difficulty == d %}selected{% endif %}>{{ d|capitalize }}</option>
       {% endfor %}
     </select>
   </div>
@@ -47,6 +49,24 @@
     Start quiz
   </button>
 </form>
+
+<p class="text-sm text-gray-700 mb-2">
+  To start a new quiz select topic and difficulty.
+</p>
+
+<hr class="my-4 border-gray-300" />
+
+{% if current_topic and current_difficulty %}
+  <p class="text-sm mb-4">
+    Quiz in progress for
+    <span class="font-semibold">{{ current_topic }}</span>
+    –
+    <span class="font-semibold">{{ current_difficulty|capitalize }}</span>
+    {% if current_index and total_questions %}
+      (Question {{ current_index }} of {{ total_questions }})
+    {% endif %}
+  </p>
+{% endif %}
 
 <div id="quiz-region" class="space-y-4">
   {% if last_result %}

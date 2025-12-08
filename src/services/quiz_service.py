@@ -130,7 +130,7 @@ def load_question_bank() -> List[MCQQuestion]:
 
 _QUESTIONS_CACHE: List[MCQQuestion] | None = None
 _SESSIONS: dict[str, QuizSession] = {}
-QUIZ_LENGTH = 5
+QUIZ_LENGTH = 10
 
 
 def get_question_bank() -> List[MCQQuestion]:

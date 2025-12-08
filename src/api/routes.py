@@ -37,6 +37,12 @@ async def home(request: Request) -> HTMLResponse:
         "question": None,
         "last_result": None,
         "summary": None,
+        "selected_topic": None,
+        "selected_difficulty": None,
+        "current_topic": None,
+        "current_difficulty": None,
+        "current_index": None,
+        "total_questions": None,
     }
     return templates.TemplateResponse("quiz.html", context)
 
@@ -63,6 +69,12 @@ async def start_quiz(
             "question": None,
             "last_result": None,
             "summary": None,
+            "selected_topic": None,
+            "selected_difficulty": None,
+            "current_topic": None,
+            "current_difficulty": None,
+            "current_index": None,
+            "total_questions": None,
         }
         return templates.TemplateResponse("quiz.html", context, status_code=400)
 
@@ -77,6 +89,12 @@ async def start_quiz(
         "question": question,
         "last_result": None,
         "summary": None,
+        "selected_topic": None,
+        "selected_difficulty": None,
+        "current_topic": session.selected_topic,
+        "current_difficulty": session.selected_difficulty,
+        "current_index": 1,
+        "total_questions": len(session.questions),
     }
     return templates.TemplateResponse("quiz.html", context)
 
@@ -91,6 +109,7 @@ async def submit_answer(
     """Submit an answer and return the next question (or finished state)."""
 
     try:
+        session = quiz_service.get_session(session_id)
         correct, next_question, finished = quiz_service.record_answer(
             session_id,
             question_id,
@@ -104,6 +123,13 @@ async def submit_answer(
     if finished:
         summary = quiz_service.compute_quiz_summary(session_id)
 
+    if finished:
+        current_index = session.total_questions
+    else:
+        current_index = len(session.attempts) + 1
+
+    total_questions = len(session.questions)
+
     context = {
         "request": request,
         "topics": quiz_service.get_available_topics(),
@@ -113,6 +139,12 @@ async def submit_answer(
         "question": next_question,
         "last_result": last_result,
         "summary": summary,
+        "selected_topic": None,
+        "selected_difficulty": None,
+        "current_topic": session.selected_topic,
+        "current_difficulty": session.selected_difficulty,
+        "current_index": current_index,
+        "total_questions": total_questions,
     }
     return templates.TemplateResponse("quiz.html", context)
 
