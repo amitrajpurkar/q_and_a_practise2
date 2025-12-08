@@ -2,5 +2,116 @@
 
 {% block content %}
 <h1 class="text-2xl font-bold mb-4">Offline Quiz</h1>
-<p class="mb-2">Topic and difficulty selection UI will be implemented in later phases.</p>
+
+{% if load_error %}
+  <p class="mb-4 text-red-600">{{ load_error }}</p>
+{% endif %}
+
+<form
+  method="post"
+  action="/api/quiz/start"
+  class="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:gap-4"
+>
+  <div>
+    <label for="topic" class="block text-sm font-semibold mb-1">Topic</label>
+    <select
+      id="topic"
+      name="topic"
+      class="border rounded px-2 py-1 min-w-[8rem]"
+      required
+    >
+      {% for t in topics %}
+        <option value="{{ t }}">{{ t }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div>
+    <label for="difficulty" class="block text-sm font-semibold mb-1">Difficulty</label>
+    <select
+      id="difficulty"
+      name="difficulty"
+      class="border rounded px-2 py-1 min-w-[8rem]"
+      required
+    >
+      {% for d in difficulties %}
+        <option value="{{ d }}">{{ d|capitalize }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button
+    type="submit"
+    class="mt-2 md:mt-0 inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700"
+  >
+    Start quiz
+  </button>
+</form>
+
+<div id="quiz-region" class="space-y-4">
+  {% if last_result %}
+    <p class="font-semibold">
+      {% if last_result.correct %}
+        Correct!
+      {% else %}
+        Incorrect.
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if question and session_id %}
+    <div class="space-y-2">
+      <p class="font-semibold">Question:</p>
+      <p class="mb-2">{{ question.text }}</p>
+      <form method="post" action="/api/quiz/{{ session_id }}/answer" class="space-y-2">
+        <input type="hidden" name="question_id" value="{{ question.id }}" />
+        {% for option in question.options %}
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="chosen_option"
+              value="{{ option }}"
+              required
+            />
+            <span>{{ option }}</span>
+          </label>
+        {% endfor %}
+        <button
+          type="submit"
+          class="mt-3 inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded hover:bg-green-700"
+        >
+          Submit answer
+        </button>
+      </form>
+    </div>
+  {% elif last_result and last_result.finished and summary %}
+    <div class="space-y-2">
+      <p class="font-semibold">Quiz summary</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li>
+          <span class="font-semibold">Questions attempted:</span>
+          {{ summary.total_questions }}
+        </li>
+        <li>
+          <span class="font-semibold">Correct answers:</span>
+          {{ summary.correct_count }}
+        </li>
+        <li>
+          <span class="font-semibold">Incorrect answers:</span>
+          {{ summary.incorrect_count }}
+        </li>
+        <li>
+          <span class="font-semibold">Score:</span>
+          {{ summary.score_percentage|round(1) }}%
+        </li>
+        <li>
+          <span class="font-semibold">Time spent:</span>
+          {{ summary.duration_seconds|round(1) }} s
+        </li>
+      </ul>
+    </div>
+  {% elif last_result and last_result.finished %}
+    <p class="font-semibold">Quiz finished.</p>
+  {% endif %}
+</div>
 {% endblock %}

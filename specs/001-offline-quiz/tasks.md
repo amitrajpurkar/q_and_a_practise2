@@ -54,14 +54,14 @@ description: "Task list for Offline Quiz Question Bank feature"
 
 ### Implementation for User Story 1
 
-- [ ] T010 [US1] Implement functions in `src/services/quiz_service.py` to derive available topics and difficulties from the loaded question bank
-- [ ] T011 [US1] Implement quiz session creation logic in `src/services/quiz_service.py` (filter questions by topic & difficulty, select fixed number, create QuizSession with ID and first question)
-- [ ] T012 [US1] Implement `POST /api/quiz/start` handler in `src/api/routes.py` that validates topic/difficulty, calls quiz_service to create a session, and returns the first Question as JSON
-- [ ] T013 [US1] Implement `GET /` handler in `src/api/routes.py` that renders `src/web/templates/quiz.html` with lists of available topics and difficulties
-- [ ] T014 [P] [US1] Implement Jinja2 markup in `src/web/templates/quiz.html` to show topic/difficulty selection form and an HTMX target area for loading questions
-- [ ] T015 [US1] Implement `POST /api/quiz/{session_id}/answer` handler in `src/api/routes.py` that accepts AnswerSubmission JSON, updates the QuizSession via quiz_service, and returns correctness plus next question or finished flag
-- [ ] T016 [US1] Extend `src/services/quiz_service.py` with logic to record QuestionAttempt objects, update running score, and enforce fixed question count and early-exit sentinel/flags
-- [ ] T017 [P] [US1] Add basic unit tests in `tests/unit/test_quiz_service.py` for topic/difficulty filtering and starting a QuizSession
+- [X] T010 [US1] Implement functions in `src/services/quiz_service.py` to derive available topics and difficulties from the loaded question bank
+- [X] T011 [US1] Implement quiz session creation logic in `src/services/quiz_service.py` (filter questions by topic & difficulty, select fixed number, create QuizSession with ID and first question)
+- [X] T012 [US1] Implement `POST /api/quiz/start` handler in `src/api/routes.py` that validates topic/difficulty, calls quiz_service to create a session, and returns the first question view
+- [X] T013 [US1] Implement `GET /` handler in `src/api/routes.py` that renders `src/web/templates/quiz.html` with lists of available topics and difficulties
+- [X] T014 [P] [US1] Implement Jinja2 markup in `src/web/templates/quiz.html` to show topic/difficulty selection form and a quiz region for displaying questions
+- [X] T015 [US1] Implement `POST /api/quiz/{session_id}/answer` handler in `src/api/routes.py` that accepts an answer, updates the QuizSession via quiz_service, and returns correctness plus the next question view or finished flag
+- [X] T016 [US1] Extend `src/services/quiz_service.py` with logic to record QuestionAttempt objects, update running score, and enforce fixed question count and finished state
+- [X] T017 [P] [US1] Add basic unit tests in `tests/unit/test_quiz_service.py` for topic/difficulty filtering and starting a QuizSession
 
 **Checkpoint**: User Story 1 should be fully functional: student can choose topic & difficulty, answer a sequence of questions, and have score tracked.
 
@@ -75,10 +75,10 @@ description: "Task list for Offline Quiz Question Bank feature"
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Implement summary computation function in `src/services/quiz_service.py` to derive totals, percentage score, and duration from a QuizSession
-- [ ] T019 [US2] Implement `GET /api/quiz/{session_id}/summary` handler in `src/api/routes.py` returning QuizSummary JSON as defined in `contracts/openapi.yaml`
-- [ ] T020 [P] [US2] Update `src/web/templates/quiz.html` to fetch and render the summary (score, counts, duration) when the quiz is finished
-- [ ] T021 [P] [US2] Integrate `src/utils/timing.py` with quiz lifecycle so start and end times are recorded and used in summary duration calculations
+- [X] T018 [US2] Implement summary computation function in `src/services/quiz_service.py` to derive totals, percentage score, and duration from a QuizSession
+- [X] T019 [US2] Implement `GET /api/quiz/{session_id}/summary` handler in `src/api/routes.py` returning QuizSummary JSON as defined in `contracts/openapi.yaml`
+- [X] T020 [P] [US2] Update `src/web/templates/quiz.html` to fetch and render the summary (score, counts, duration) when the quiz is finished
+- [X] T021 [P] [US2] Integrate `src/utils/timing.py` with quiz lifecycle so start and end times are recorded and used in summary duration calculations
 
 **Checkpoint**: User Story 2 should be functional: after a session ends, student can view a clear summary of performance and time spent.
 
