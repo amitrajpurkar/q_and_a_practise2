@@ -104,10 +104,10 @@ description: "Task list for Offline Quiz Question Bank feature"
 
 **Purpose**: Final cleanup, style compliance, and basic validation of flows.
 
-- [ ] T025 [P] Run PEP8/formatting checks on all Python files under `src/` and fix any style issues
-- [ ] T026 [P] Extend `tests/unit/test_quiz_service.py` with tests for summary and review calculations (totals, percentages, incorrect question list)
-- [ ] T027 Perform manual end-to-end test of all user stories using steps from `specs/001-offline-quiz/quickstart.md`
-- [ ] T028 [P] Validate that `uv run uvicorn src.main:app --reload` starts the app and that static assets (Tailwind CSS, HTMX) load from `src/web/static/`
+- [X] T025 [P] Run PEP8/formatting checks on all Python files under `src/` and fix any style issues
+- [X] T026 [P] Extend `tests/unit/test_quiz_service.py` with tests for summary and review calculations (totals, percentages, incorrect question list)
+- [X] T027 Perform manual end-to-end test of all user stories using steps from `specs/001-offline-quiz/quickstart.md`
+- [X] T028 [P] Validate that `uv run uvicorn src.main:app --reload` starts the app and that static assets (Tailwind CSS, HTMX) load from `src/web/static/`
 
 ---
 
