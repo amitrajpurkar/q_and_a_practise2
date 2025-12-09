@@ -1,0 +1,24 @@
+# Python ignores
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual environments
+.venv/
+venv/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+
+# Logs and local data
+*.log
+*.sqlite3
+
+# IDE / OS files
+.idea/
+.vscode/
+.DS_Store

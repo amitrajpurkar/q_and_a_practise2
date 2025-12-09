@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: Offline Quiz Question Bank API
+  version: 1.0.0
+
+paths:
+  "/":
+    get:
+      summary: Show topic and difficulty selection page
+      responses:
+        "200":
+          description: HTML page with available topics and difficulty choices.
+
+  "/api/quiz/start":
+    post:
+      summary: Start a new quiz session
+      description: Creates a new quiz session for the chosen topic and difficulty and
+        returns the first question.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                topic:
+                  type: string
+                  description: Topic/subject selected by the student.
+                difficulty:
+                  type: string
+                  enum: [easy, medium, hard]
+                  description: Difficulty level for the session.
+              required: [topic, difficulty]
+      responses:
+        "200":
+          description: Quiz session started.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartQuizResponse"
+
+  "/api/quiz/{session_id}/answer":
+    post:
+      summary: Submit an answer for the current question
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnswerSubmission"
+      responses:
+        "200":
+          description: Answer accepted; returns correctness and either the next question
+            or indicates that the quiz is finished.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnswerResponse"
+
+  "/api/quiz/{session_id}/summary":
+    get:
+      summary: Get the summary for a completed or early-ended quiz session
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Summary including score, duration, and list of incorrect
+            questions with correct answers.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizSummary"
+
+components:
+  schemas:
+    Question:
+      type: object
+      properties:
+        id:
+          type: string
+        topic:
+          type: string
+        difficulty:
+          type: string
+          enum: [easy, medium, hard]
+        text:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+        correct_option:
+          type: string
+      required: [id, topic, difficulty, text, options, correct_option]
+
+    StartQuizResponse:
+      type: object
+      properties:
+        session_id:
+          type: string
+        question:
+          $ref: "#/components/schemas/Question"
+      required: [session_id, question]
+
+    AnswerSubmission:
+      type: object
+      properties:
+        question_id:
+          type: string
+        chosen_option:
+          type: string
+      required: [question_id, chosen_option]
+
+    AnswerResponse:
+      type: object
+      properties:
+        correct:
+          type: boolean
+        next_question:
+          allOf:
+            - $ref: "#/components/schemas/Question"
+          nullable: true
+        finished:
+          type: boolean
+      required: [correct, finished]
+
+    QuizSummary:
+      type: object
+      properties:
+        total_questions:
+          type: integer
+        correct_count:
+          type: integer
+        incorrect_count:
+          type: integer
+        score_percentage:
+          type: number
+          format: float
+        duration_seconds:
+          type: number
+          format: float
+        incorrect_questions:
+          type: array
+          items:
+            type: object
+            properties:
+              question:
+                $ref: "#/components/schemas/Question"
+              chosen_option:
+                type: string
+              correct_option:
+                type: string
+      required:
+        - total_questions
+        - correct_count
+        - incorrect_count
+        - score_percentage
+        - duration_seconds
+        - incorrect_questions
