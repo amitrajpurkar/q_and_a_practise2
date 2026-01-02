@@ -1,0 +1,19 @@
+flowchart TD
+    A["Start: Student opens app"] --> B["GET /"]
+    B --> C{CSV load ok?}
+    C -- No --> C1[Show load error on page]
+    C -- Yes --> D["Display topic + difficulty selectors"]
+    D --> E["Student selects topic + difficulty"]
+    E --> F["POST /api/quiz/start"]
+    F --> G["Create QuizSession + choose up to 10 questions"]
+    G --> H["Render Question 1"]
+
+    H --> I{Student submits an answer}
+    I --> J["POST /api/quiz/{session_id}/answer"]
+    J --> K["Record QuestionAttempt"]
+    K --> L{More questions?}
+    L -- Yes --> M["Render next question + feedback"]
+    M --> I
+    L -- No --> N["Set end_time + compute summary"]
+    N --> O["Render summary + incorrect review"]
+    O --> P["End"]

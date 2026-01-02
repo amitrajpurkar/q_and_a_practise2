@@ -1,0 +1,5 @@
+flowchart LR
+    Student[Student] -->|Select topic/difficulty\nSubmit answers| System((Offline Quiz App))
+    System -->|Questions\nFeedback\nSummary| Student
+
+    CSV[(Question Bank CSV)] -->|Question rows| System

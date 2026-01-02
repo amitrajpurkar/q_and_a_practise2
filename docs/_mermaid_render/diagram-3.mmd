@@ -1,0 +1,15 @@
+flowchart LR
+    actor([Student])
+
+    subgraph System[Offline Quiz Application]
+        UC1((Start quiz))
+        UC2((Answer question))
+        UC3((View summary & review))
+    end
+
+    actor --> UC1
+    actor --> UC2
+    actor --> UC3
+
+    UC1 --> UC2
+    UC2 --> UC3
